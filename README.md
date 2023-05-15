@@ -24,6 +24,6 @@ Postcondiciones:
 ![](diagrama.png)  
 
 
-
 **Pseudocódigo**
+
 ![](pseudocodigo.png)
