@@ -2,7 +2,7 @@
 
 El usuario, como administrador de inventario, desea agregar marcas y cantidades de chaquetas y visualizar el inventario actual. El escenario implica ingresar una marca, agregar la cantidad correspondiente y luego validar el inventario para un mejor manejo. El usuario espera poder ver las cantidades de chaquetas según las marcas agregadas.
 
-![](drawio.png)       
+![](drawio.png)
 
 **Descripcion del caso de uso**
 Nombre: Agregar Inventario de Chaquetas
