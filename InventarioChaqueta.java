@@ -1,75 +1,143 @@
-import java.util.*;
+import java.util.Scanner;
 
-public class InventarioChaqueta {
+public class IInventarioChaqueta {
+    static Scanner sc = new Scanner(System.in);
+    static String[] marcas = new String[50];
+    static int[] cantidades = new int[50];
+    static int totalChaquetas = 0;
+
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        HashMap<String, Integer> inventario = new HashMap<>();
-        String tipoMarca, respuesta;
-        int cantidad;
+        Inventario inventario = new Inventario();
+        int opcion=0; 
+        boolean opcionValida = false;
+        
         do {
-            System.out.println("MENU DE INVENTARIO DE CHAQUETAS");
-            System.out.println("1. Ingrese el tipo de marca que quiere agregar");
-            System.out.println("2. Ingrese la cantidad de chaquetas de la marca 'el nombre'");
-            System.out.println("3. Desea agregar otra marca si o no");
-            System.out.println("4. Ingrese otra cantidad de tipo de marca 'el nombre'");
-            System.out.println("5. Visualizar el inventario total.");
-            System.out.print("Ingrese su opción: ");
-            int opcion = sc.nextInt();
-            sc.nextLine();
+            System.out.println("          MENU DE INVENTARIO DE CHAQUETAS       ");
+            System.out.println("1. Ingrese el tipo de marca que quiere agregar.");
+            System.out.println("2. Ingrese otra cantidad de chaquetas de las cuales se encuentren creadas en el inventario.");
+            System.out.println("3. Desea agregar otra marca si o no.");
+            System.out.println("4. Ingrese otra cantidad con el tipo de marca.");
+            System.out.println("5. Visualizar inventario total.");
+            System.out.println("6. Salir.");
+
+
+            while (!opcionValida) {
+                System.out.print("Ingrese su opción: ");
+                opcion = sc.nextInt();
+                sc.nextLine();
+
+                if (opcion >= 1 && opcion <= 6) {
+                    opcionValida = true;
+                } else {
+                    System.out.println("Opción no válida. Intento de nuevo.");
+                }
+            }
+            
+            opcionValida = false;
+
             switch (opcion) {
                 case 1:
-                    System.out.print("Ingrese el tipo de marca que quiere agregar: ");
-                    tipoMarca = sc.nextLine();
-                    inventario.put(tipoMarca, 0); // agregar la marca al inventario con cantidad inicial 0
-                    System.out.println("Se ha agregado la marca '" + tipoMarca + "' al inventario.");
+                    inventario.agregarMarca();
                     break;
                 case 2:
-                    System.out.print("Ingrese la cantidad de chaquetas de la marca 'el nombre': ");
-                    cantidad = sc.nextInt();
-                    sc.nextLine();
-                    System.out.print("Ingrese el tipo de marca: ");
-                    tipoMarca = sc.nextLine();
-                    if (inventario.containsKey(tipoMarca)) { // verificar si la marca ya está en el inventario
-                        inventario.put(tipoMarca, inventario.get(tipoMarca) + cantidad); // agregar la cantidad a la marca existente
-                        System.out.println("Se ha agregado " + cantidad + " chaquetas de la marca '" + tipoMarca + "' al inventario.");
-                    } else {
-                        System.out.println("La marca '" + tipoMarca + "' no existe en el inventario.");
-                    }
+                    inventario.agregarCantidad();
                     break;
                 case 3:
-                    System.out.print("Desea agregar otra marca? (si/no): ");
-                    respuesta = sc.nextLine();
-                    if (respuesta.equalsIgnoreCase("si")) {
-                        System.out.print("Ingrese el tipo de marca que quiere agregar: ");
-                        tipoMarca = sc.nextLine();
-                        inventario.put(tipoMarca, 0);
-                        System.out.println("Se ha agregado la marca '" + tipoMarca + "' al inventario.");
-                    }
+                    inventario.preguntarAgregarMarca();
                     break;
                 case 4:
-                    System.out.print("Ingrese la cantidad de tipo de marca 'el nombre': ");
-                    cantidad = sc.nextInt();
-                    sc.nextLine();
-                    System.out.print("Ingrese el tipo de marca: ");
-                    tipoMarca = sc.nextLine();
-                    if (inventario.containsKey(tipoMarca)) {
-                        inventario.put(tipoMarca, cantidad); // actualizar la cantidad de la marca existente
-                        System.out.println("Se ha actualizado la cantidad de la marca '" + tipoMarca + "' en el inventario.");
-                    } else {
-                        System.out.println("La marca '" + tipoMarca + "' no existe en el inventario.");
-                    }
+                    inventario.actualizarCantidad();
                     break;
                 case 5:
-                System.out.println("Inventario total:");
-                for (String key : inventario.keySet()) { // recorrer todas las marcas en el inventario
-                System.out.println("- " + key + ": " + inventario.get(key)); // mostrar el tipo de marca y su cantidad
-                }
-                break;
+                    inventario.visualizarInventario();
+                    break;
+                case 6:
+                   System.out.println("Saliendo del programa...");
+                    break;
                 default:
-                System.out.println("Opción inválida.");
+                    System.out.println("Opción no válida.");
+                    break;
+            }
+
+            System.out.println();
+        } while (opcion != 6);
+    }
+
+    static void agregarMarca() {
+        System.out.print("Ingrese el tipo de marca que quiere agregar: ");
+        String marca = sc.nextLine();
+        marcas[totalChaquetas] = marca;
+        cantidades[totalChaquetas] = 0;
+        totalChaquetas++;
+        System.out.println("Se ha agregado la marca '" + marca + "' al inventario.");
+    }
+
+    static void agregarCantidad() {
+        System.out.print("Ingrese el tipo de marca: ");
+        String marca = sc.nextLine();
+        int indice = -1;
+
+        for (int i = 0; i < totalChaquetas; i++) {
+            if (marcas[i].equalsIgnoreCase(marca)) {
+                indice = i;
                 break;
-                }
-                } while (true);
-                }
-                }
-                                
+            }
+        }
+
+        if (indice == -1) {
+            System.out.println("La marca '" + marca + "' no existe en el inventario. Por favor agregue la marca primero.");
+        } else {
+            System.out.print("Ingrese la cantidad a agregar: ");
+            int cantidad = sc.nextInt();
+            sc.nextLine();
+            cantidades[indice] += cantidad;
+            System.out.println("Se han actualizado las cantidades de la marca " + marca);
+        }
+    }
+    
+        static void preguntarAgregarMarca() {
+        String respuesta;
+        do {
+            System.out.print("Desea agregar otra marca? (si/no): ");
+            respuesta = sc.nextLine();
+        } while (!respuesta.equalsIgnoreCase("si") && !respuesta.equalsIgnoreCase("no"));
+        if (respuesta.equalsIgnoreCase("si")) {
+            agregarMarca();
+        }
+    }
+    
+       static void actualizarCantidad(){
+        System.out.print("Ingrese el tipo de marca: ");
+        String marca = sc.nextLine();
+        int indice = -1;
+        for (int i = 0; i < totalChaquetas; i++) {
+            if (marcas[i].equalsIgnoreCase(marca)) {
+                indice = i;
+                break;
+            }
+        }
+        if (indice == -1) {
+            System.out.println("La marca ingresada no se encuentra en el inventario.");
+        } else {
+        System.out.print("Ingrese la cantidad a agregar: ");
+        int cantidad = sc.nextInt();
+        sc.nextLine(); 
+        cantidades[indice] += cantidad;
+        System.out.println("Se han actualizado las cantidades de la marca " + marca);
+        }
+        }
+
+    static void visualizarInventario() {
+        System.out.println("     Inventario de chaquetas   ");
+        for (int i = 0; i < totalChaquetas; i++) {
+            System.out.println(marcas[i] + ": " + cantidades[i]);
+            
+        }
+    }
+} 
+class Inventario {
+    private String[] marcas = new String[50];     
+    private int[] cantidades = new int[50];     
+    private int totalChaquetas = 0;     
+
+}
