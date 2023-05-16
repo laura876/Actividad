@@ -7,6 +7,7 @@ public class IInventarioChaqueta {
     static int totalChaquetas = 0;
 
     public static void main(String[] args) {
+        Inventario inventario = new Inventario();
         int opcion=0; 
         boolean opcionValida = false;
         
@@ -36,22 +37,22 @@ public class IInventarioChaqueta {
 
             switch (opcion) {
                 case 1:
-                    agregarMarca();
+                    inventario.agregarMarca();
                     break;
                 case 2:
-                    agregarCantidad();
+                    inventario.agregarCantidad();
                     break;
                 case 3:
-                    preguntarAgregarMarca();
+                    inventario.preguntarAgregarMarca();
                     break;
                 case 4:
-                    actualizarCantidad();
+                    inventario.actualizarCantidad();
                     break;
                 case 5:
-                    visualizarInventario();
+                    inventario.visualizarInventario();
                     break;
                 case 6:
-                    System.out.println("Saliendo del programa...");
+                   System.out.println("Saliendo del programa...");
                     break;
                 default:
                     System.out.println("Opción no válida.");
@@ -130,6 +131,14 @@ public class IInventarioChaqueta {
         System.out.println("     Inventario de chaquetas   ");
         for (int i = 0; i < totalChaquetas; i++) {
             System.out.println(marcas[i] + ": " + cantidades[i]);
+            
         }
     }
+} 
+class Inventario {
+    private String[] marcas = new String[50];     
+    private int[] cantidades = new int[50];     
+    private int totalChaquetas = 0;     
+
 }
+
