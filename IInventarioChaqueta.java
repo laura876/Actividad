@@ -7,7 +7,6 @@ public class IInventarioChaqueta {
     static int totalChaquetas = 0;
 
     public static void main(String[] args) {
-        Inventario inventario = new Inventario();
         int opcion=0; 
         boolean opcionValida = false;
         
@@ -37,19 +36,19 @@ public class IInventarioChaqueta {
 
             switch (opcion) {
                 case 1:
-                    inventario.agregarMarca();
+                    agregarMarca();
                     break;
                 case 2:
-                    inventario.agregarCantidad();
+                    agregarCantidad();
                     break;
                 case 3:
-                    inventario.preguntarAgregarMarca();
+                    preguntarAgregarMarca();
                     break;
                 case 4:
-                    inventario.actualizarCantidad();
+                    actualizarCantidad();
                     break;
                 case 5:
-                    inventario.visualizarInventario();
+                    visualizarInventario();
                     break;
                 case 6:
                    System.out.println("Saliendo del programa...");
@@ -135,10 +134,5 @@ public class IInventarioChaqueta {
         }
     }
 } 
-class Inventario {
-    private String[] marcas = new String[50];     
-    private int[] cantidades = new int[50];     
-    private int totalChaquetas = 0;     
 
-}
 
